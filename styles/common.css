@@ -1,0 +1,98 @@
+	body {
+		font-family: arial, sans-serif;
+		margin: 0px;
+		padding: 0px;
+		background-color: #ffffff;
+		color: #000000;
+		background-color: #99ccff;
+		width:99%;
+		font-size: smaller;
+	}
+	
+	div#header{
+		text-align: center;
+		width: 100%;
+	}
+	div#calcmenu{
+		text-align: center;
+		padding: 5px;
+		border-bottom: thin black solid;
+		width: 100%;
+		background-color: #99ccff;
+	}
+
+/*
+ * The following is style for the main menu
+ */
+	div#mainmenu{
+		padding: 10px;
+		float: left;
+		border-right: thin black dashed;
+		border-bottom: thin black dashed;
+		background-color: #eeeeff;
+	}
+	
+	div.menutitle{
+		font-weight: bold;
+	}
+	ul.menu{
+		margin: 0px;
+		padding: 3px;
+		list-style: none;
+		width: 180px;
+	}
+	ul.menu li{
+		padding: 3px;
+	}
+
+/*
+ * The following styles are for the main content area
+ */
+
+	div#center{
+		background-color: white;
+	}
+	div#maincontents{
+		padding: 10px;
+		background-color: white;
+		margin-left: 200px;	
+	}
+	div.sectiontitle{
+		font-weight: bold;
+		border-bottom: thin solid black;
+	}
+	div.sectioncontent ul{
+		list-style: square;
+		margin-top:2px;
+	}
+	
+	
+	
+	div#simusponsor {
+		text-align: center;
+		border-top: thin black solid;
+		background-color: #99ccff;
+	}
+	
+	span.simutext {
+		font-size: x-small;
+	}
+	span.footnote {
+		font-size: xx-small;
+		color: #ff0000;
+	}
+	div#webmaster {
+		font-size: smaller;
+	}
+
+/*
+ * The following are link styles
+ */
+	a:link, a:visited {
+		text-decoration: none;
+		color: #0000ff;
+	}
+	a:hover {
+		text-decoration: underline;
+		color: #cc0033;
+	}

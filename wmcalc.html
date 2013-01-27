@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Warrior Mage Calculator</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-37980747-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  <script language="JavaScript" src="calc.js" type="text/JavaScript"></script>
+  <script language="JavaScript" type="text/JavaScript">
+   function setupData() {
+   	data = new Array();
+	
+	data[0] = new Array("Primary Armor",        2,	2,	3,	3,	4,	10);
+	data[1] = new Array("Defending",        	1,	1,	2,	2,	3,	8);	
+    data[2] = new Array("Primary Weapon",		3,	4,	4,	5,	5,	13);
+    data[3] = new Array("Secondary Weapon",		0,	3,	3,	4,	4,	10);
+    data[4] = new Array("Tertiary Weapon", 		0,	0,	2,	3,	4,	10);
+	data[5] = new Array("Parry Ability",        2,	3,	3,	4,	4,	10);	
+    data[6] = new Array("Primary Magic", 		4,	4,	5,	5,	6,	15);
+	data[7] = new Array("Secondary Magic", 		4,	4,	4,	5,	6,	15);
+	data[8] = new Array("Tertiary Magic", 		3,	3,	4,	4,	5,	13);
+	data[9] = new Array("4th Magic", 			0,	3,	3,	4,	5,	13);
+	data[10] = new Array("5th Magic", 			0,	0,	3,	4,	5,	13);
+	data[11] = new Array("Summoning", 			3,	4,	5,	5,	5,	13);
+	data[12] = new Array("Targeted Magic", 		4,	4,	4,	5,	6,	15);	
+	data[13] = new Array("Primary Survival",    1,	1,	2,	2,	3,	8);
+	data[14] = new Array("Secondary Survival",  1,	1,	2,	2,	3,	8);
+	data[15] = new Array("Tertiary Survival",   1,	1,	1,	2,	2,	5);
+	data[16] = new Array("4th Survival",        1,	1,	1,	2,	2,	5);	
+	data[17] = new Array("Primary Lore",        2,	2,	3,	3,	4,	10);
+	data[18] = new Array("Secondary Lore",      2,	2,	2,	3,	3,	8);
+	data[19] = new Array("Tertiary Lore",       1,	2,	2,	3,	3,	8);	
+	data[20] = new Array("Scholarship",        	1,	1,	2,	2,	3,	8);	
+	
+    dataSpan = new Array(                       0,  10, 30, 70, 100, 150);
+	
+	preCalcData = new Array();
+	for (i = 0; i < data.length; i++) {
+		preCalcData[i] = new Array();
+		for (j = 0; j < dataSpan.length; j++) {
+			if (j == 0)
+				preCalcData[i][j] = 0;
+			else
+				preCalcData[i][j] = preCalcData[i][j - 1] + data[i][j] * (dataSpan[j] - dataSpan[j - 1]);
+		}
+	}
+	
+	armorNames = new Array("Light Armor", "Chain Armor", "Brigandine", "Plate Armor", "Shield Usage");
+	
+	loreNames = new Array("Outfitting", "Enchanting", "Forging", "Enchanting", "Engineering",
+						  "Alchemy",  "Appraisal", "Performance", "Tactics", "Mechanical Lore");
+
+	weaponNames = new Array("Small Edged", "Heavy Edged", "Twohanded Edged", "Small Blunt", "Large Blunt",
+   							"Twohanded Blunt", "Sling", "Crossbow", "Bow", "Staves", "Large Edged",
+   							"Polearms", "Light Thrown", "Heavy Thrown", "Brawling");
+								
+	survivalNames = new Array("Evasion", "Athletics", "Perception", "Stealth", "Locksmithing", "First Aid",
+   							  "Outdoorsmanship", "Skinning");
+
+	magicNames = new Array("Attunement", "Arcana", "Targeted Magic", "Astrology",
+                           "Utility", "Sorcery", "Elementalism", "Augmentation", "Debilitation", "Warding",
+                           "Inner Fire", "Theurgy");
+
+
+   }
+
+ </script>
+	<link rel="stylesheet" type="text/css" href="styles/common.css" />
+	<link rel="stylesheet" type="text/css" href="styles/calculator.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+	<div id="header">
+		<div id="calcmenu">Calculators:
+			<a href="barbcalc.html">Barbarians</a> |
+            <a href="bardcalc.html">Bards</a> |
+			<a href="clericcalc.html">Clerics</a> |
+			<a href="empcalc.html">Empaths</a> |
+			<a href="necrocalc.html">Necromancers</a> |
+			<a href="mmcalc.html">Moon Mages</a> |
+			<a href="paladincalc.html">Paladins</a> |
+			<a href="rangercalc.html">Rangers</a> |
+			<a href="thiefcalc.html">Thieves</a> |
+			<a href="tradercalc.html">Traders</a> |
+			<a href="wmcalc.html">War Mages</a>
+		</div>
+	</div>
+	<div id="maincontent">
+		<script language="JavaScript" type="text/JavaScript">setupData();</script>
+		<h1>Warrior Mage Calculator</h1>
+		<h2>Now with new Warrior Mage reqs! (Last Update 2013)</h2>
+		Enter range of circles:<br />
+		<input onkeyup="drawTable(this.value, document.getElementById('circle2').value);" title="Circle to display from" size="5" value="2" name="circle1" id="circle1" />
+		-
+		<input onkeyup="drawTable(document.getElementById('circle1').value, this.value);" title="Circle to display to" size="5" value="11" name="circle2" id="circle2" />
+		<br /><br />
+		<span id="tableArea"></span>
+		<script language="JavaScript" type="text/JavaScript">drawTable(2,11);</script>
+	</div>
+	<div id="maincontent2">Select a skill and type in the amount you have:<br />
+		<select onchange="clearForm();" name="list">
+			<script language="JavaScript" type="text/JavaScript">populateList()</script>
+		</select>
+		<input onkeyup="calcCircle(this.value);" title="Your ranks in the skill" size="5" name="ranks" />
+  		<br />
+		<span id="rankArea"></span><br />
+	</div>
+	
+	<div id="maincontent3">Cut and paste EXP ALL here:<br />
+		<textarea onkeyup="calcExp(this.value);" title="paste exp here" rows="20" cols="100"></textarea><br />
+		<span id="expArea"></span>
+	</div>
+	
+	<div id="simusponsor">
+		<br />
+		Brought to you by <a href="http://www.terkowitz.com/index.html">www.terkowitz.com</a>.<br />
+	</div>
+	<br />
+	</body>
+</html>

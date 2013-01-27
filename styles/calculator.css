@@ -1,0 +1,57 @@
+body{
+	background-color: #99ccff;
+}
+
+div#maincontent, div#maincontent2, div#maincontent3{
+	background-color: white;
+	margin: 0px;
+	width: 100%;
+	padding: 10px;
+	padding-bottom: 20px;
+	border-bottom: thin black dashed;
+}
+
+div#maincontent{
+	text-align: center;
+}
+
+div#maincontent2{
+	background-color: #eeeeff;
+}
+
+div#maincontent3{
+	border-bottom: none;
+}
+
+table#circletable{
+	font-size: x-small;
+	border: thin silver solid;
+	border-collapse: collapse;
+	width: 100%;
+}
+table#circletable tr td{
+	border: 1px silver solid;
+	text-align: center;
+	padding: 4px;
+}
+
+tr.heading {
+	background-color: #eeeeee;
+}
+
+td.circle {
+	font-weight: bold;
+}
+
+textarea, input, select{
+	border: 1px black solid;
+	background-color: #ffffee;
+}
+
+/*
+ * The following is row style information.
+ */
+ 
+ table#circletable tr {
+ 	background-color: #eeffee;
+ } 
