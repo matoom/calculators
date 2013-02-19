@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.sitemaps.org/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.sitemaps.org/schemas/sitemap-video/1.1">
+  <url>
+    <loc>http://matoom.github.com/calculators</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/barbcalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/bardcalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/clericcalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/empcalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/necrocalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/mmcalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/paladincalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/rangercalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/thiefcalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/tradercalc.html</loc>
+  </url>
+  <url>
+    <loc>http://matoom.github.com/calculators/wmcalc.html</loc>
+  </url>
+
+</urlset>
