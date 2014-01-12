@@ -20,25 +20,33 @@
   <script language="JavaScript">
      function setupData() {
      	data = new Array();
-   	data[0] = new Array("Primary Weapon",       3,  3,  4,  4,  5,  13);
-	data[1] = new Array("Secondary Weapon",     1,  2,  3,  3,  4,  10);
-	data[2] = new Array("Parry Ability",        1,  2,  2,  3,  3,  8);
-	data[3] = new Array("Primary Armor",        2,  2,  2,  3,  3,  8);
-	data[4] = new Array("Primary Lore",         1,  2,  3,  3,  3,  8);
-	data[5] = new Array("Secondary Lore",       1,  2,  2,  3,  3,  8);
-	data[6] = new Array("Tertiary Lore",        1,  1,  2,  2,  3,  8);
-	data[7] = new Array("Stealth",              2,  2,  3,  3,  4,  10);
-	data[8] = new Array("Thievery",             2,  3,  3,  4,  4,  10);
-	data[9] = new Array("Primary Survival",     4,  4,  5,  5,  6,  15);
-	data[10] = new Array("Secondary Survival",  4,  4,  4,  5,  6,  15);
-	data[11] = new Array("Tertiary Survival",   3,  4,  4,  5,  6,  15);
-	data[12] = new Array("4th Survival",        3,  4,  4,  5,  6,  15);
-	data[13] = new Array("5th Survival",        3,  4,  4,  4,  5,  13);
-	data[14] = new Array("6th Survival",        2,  3,  4,  4,  5,  13);
-	data[15] = new Array("7th Survival",        2,  3,  3,  4,  5,  13);
-	data[16] = new Array("8th Survival",        1,  2,  2,  3,  5,  13);
+   	data[0] = new Array("Primary Weapon",           3,  3,  4,  4,  5,  13);
+	data[1] = new Array("Secondary Weapon",         1,  2,  3,  3,  4,  10);
+	data[2] = new Array("Parry Ability",            1,  2,  2,  3,  3,  8);
+	data[3] = new Array("Primary Armor",            2,  2,  2,  3,  3,  8);
+	data[4] = new Array("Primary Lore",             1,  2,  3,  3,  3,  8);
+	data[5] = new Array("Secondary Lore",           1,  2,  2,  3,  3,  8);
+	data[6] = new Array("Tertiary Lore",            1,  1,  2,  2,  3,  8);
+	data[7] = new Array("Stealth",                  2,  2,  3,  3,  4,  10);
+	data[8] = new Array("Thievery",                 2,  3,  3,  4,  4,  10);
+    data[9] = new Array("Primary Survival",         4,  4,  5,  5,  6,  15);
+	data[10] = new Array("Secondary Survival",      4,  4,  4,  5,  6,  15);
+	data[11] = new Array("Tertiary Survival",       3,  4,  4,  5,  6,  15);
+	data[12] = new Array("4th Survival",            3,  4,  4,  5,  6,  15);
+	data[13] = new Array("5th Survival",            3,  4,  4,  4,  5,  13);
+	data[14] = new Array("6th Survival",            2,  3,  4,  4,  5,  13);
+	data[15] = new Array("7th Survival",            2,  3,  3,  4,  5,  13);
+	data[16] = new Array("8th Survival",            1,  2,  2,  3,  5,  13);
 
-    dataSpan = new Array(                       0,  10, 30, 70, 100, 150);
+    //data[17] = new Array("Inner Magic",             1,	2,	2,	3,	3,	8);
+    //data[18] = new Array("Primary Supernatural",	1,	1,	2,	2,	3,	8);
+    //data[19] = new Array("Secondary Supernatural",	0,	0,	2,	2,	3,	8);
+
+    data[17] = new Array("Inner Magic",             1,	2,	3,	3,	4,	10);
+    data[18] = new Array("Primary Supernatural",	1,	2,	2,	3,	3,	10);
+    data[19] = new Array("Secondary Supernatural",	0,	0,	2,	2,	4,	8);
+    dataSpan = new Array(                           0,  10, 30, 70, 100, 150);
+
 
   		preCalcData = new Array();
   		for (i = 0; i < data.length; i++) {
@@ -62,9 +70,8 @@
 		survivalNames = new Array("Evasion", "Athletics", "Perception", "Stealth", "Locksmithing", "Thievery", "First Aid",
    							      "Outdoorsmanship", "Backstab", "Skinning");
 
-		magicNames = new Array("Primary Magic", "Harness Ability", "Power Perceive", "Magical Devices", "Attunement",
-							   "Targeted Magic", "Arcana", "Augmentation", "Debilitation", "Utility", "Warding", "Astrology",
-                               "Sorcery");
+        magicNames = new Array("Augmentation", "Debilitation", "Warding", "Harness Ability",
+							   "Power Perceive", "Magical Devices", "Attunement", "Arcana", "Utility");
    	}
  </script>
 	<link rel="stylesheet" type="text/css" href="styles/common.css" />
