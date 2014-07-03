@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<!--
+    v1.0
+    License: none (public domain)
+-->
+
+<html>
+<head>
+    <title>DragonRealms TDP Calculator</title>
+
+    <link rel="stylesheet" type="text/css" href="tdp.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/tiptip.css"/>
+
+    <script type="text/javascript" src="tdp.js"></script>
+    <script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.tipTip.js"></script>
+</head>
+
+<body>
+
+<script>
+    var attributeNames = ['strength', 'reflex', 'agility', 'charisma', 'discipline', 'wisdom', 'intelligence', 'stamina'];
+    var racialModifiers = { 'human': [0, 0, 0, 0, 0, 0, 0, 0], 'dwarf': [0, 1, 1, 0, -1, 0, 0, -1], 'elf': [1, -1, -1, -1, 1, 0, 0, 1],
+        'elothean': [1, -1, 0, 0, 0, -1, -1, 2], 'gnome': [3, -2, -1, 0, 0, 0, -2, 2], 'tog': [-3, 1, 0, 0, 0, 2, 2, -2],
+        'halfling': [2, -1, -2, 0, 1, 1, 0, -1], 'kaldar': [-1, 0, 0, -1, 0, 1, 1, 0], 'prydaen': [0, -2, 0, -1, 1, 2, 0, 0],
+        'rakash': [0, -1, 1, 0, -1, 1, 2, -2], 'skra': [-1, -1, 0, 0, 0, 1, 1, 0] };
+    var racialBurdenFactors = { 'tog' : 30, 'kaldar' : 28, 'skra' : 27, 'rakash' : 24, 'human' : 24, 'dwarf' : 23,
+        'prydaen' : 23, 'elothean' : 22, 'elf' : 22,'halfling': 20, 'gnome' : 18 };
+
+    var ITERATIONS = 5;
+    var TOTAL_ATTR = 'totalAttributes';
+    var AVG_ATTR = 'avgAttributes';
+
+    function tdpcalc() {
+        clearFields();
+
+        var attributes = getValues();
+        var mod = getRacialModifier();
+
+        var calculatedAttributes = calculateValues(attributes, mod, ITERATIONS);
+        drawTDPs(attributes, calculatedAttributes, mod);
+
+        var totals = calculateTotals(attributes);
+        drawTotalStats(totals);
+        drawAvgStats(totals);
+
+        var totalSpent = calculateTotalSpent(attributes, mod);
+        drawTotalSpent(totalSpent);
+
+        var burden = calculateBurden(attributes);
+        drawBurden(burden);
+
+        showTDPs();
+        hideForm();
+    }
+
+    function clearFields() {
+        $('#tdp-table tbody').empty();
+        $('#tdp-total-stats').empty();
+        $('#tdp-avg-stats').empty();
+        $('#tdp-total-spent').empty();
+        $('#tdp-burden').empty();
+    }
+
+    function calculateBurden(attributes) {
+        var racialModifier = racialBurdenFactors[getSelectedRace()];
+        return (attributes['strength'] + attributes["stamina"]) * racialModifier;
+    }
+
+    function calculateTotals(attributes){
+        var totals = {TOTAL_ATTR : 0, AVG_ATTR : 0};
+
+        var sum = 0;
+        for(var i = 0; i < attributeNames.length; i++) {
+            sum = sum + attributes[attributeNames[i]];
+        }
+
+        totals[TOTAL_ATTR] = Math.round(sum);
+        totals[AVG_ATTR] = Math.round(totals[TOTAL_ATTR] / attributeNames.length);
+
+        return totals;
+    }
+
+    function calculateTotalSpent(attributes, mod) {
+        var totalSpent = 0;
+        for(var i = 0; i < attributeNames.length; i++) {
+            for(var j = 0; j < attributes[attributeNames[i]]; j++) {
+                totalSpent += calcTDPs(j, mod[i]);
+            }
+        }
+        return Math.round(totalSpent);
+    }
+
+    function calculateValues(attributes, mod, n) {
+        var calculatedValues = {};
+        for(var i = 0; i < attributeNames.length; i++) {
+            var values = [];
+            var value = 0;
+            for(var j = 0; j < n; j++) {
+                var currentAttribute = attributes[attributeNames[i]] + j;
+                value += calcTDPs(currentAttribute, mod[i]);
+
+                values.push(Math.round(value));
+            }
+            calculatedValues[attributeNames[i]] = values;
+        }
+        return calculatedValues;
+    }
+
+    function calcTDPs(currentAttribute, mod) {
+        return (currentAttribute * 3 * getSoftCapModifier(currentAttribute)) + ((mod * currentAttribute) / 2);
+    }
+
+    function getSelectedRace() {
+        return $('#tdp-race').val();
+    }
+
+    function getRacialModifier() {
+        return racialModifiers[getSelectedRace()];
+    }
+
+    function getSoftCapModifier(attributeValue) {
+        return attributeValue >= 100 ? 5 : 1;
+    }
+
+    function getValues() {
+        var text = $('#tdp-text-area').val();
+
+        var attributes = {};
+        attributeNames.forEach(function(attributeName) {
+            var stat = new RegExp(attributeName + "(\\D*)(\\d+)", "i").exec(text);
+            if(stat) {
+                attributes[attributeName] = parseInt(/(\d+)/.exec(stat[0])[0]);
+            } else {
+                attributes[attributeName] = 0;
+            }
+        });
+
+        return attributes;
+    }
+
+    function drawTDPs(attributes, calculatedAttributes, mod) {
+        for(var i = 0; i < attributeNames.length; i++) {
+            var html = "";
+            html += "<tr>";
+
+            html += "<td style=\"text-transform: capitalize; font-variant: normal; font-size: large; font-weight: bold; padding-right: 80px;\">";
+            html += "<span class=\"tooltip\" title=\"Racial TDP cost: " + mod[i] + " \">" + attributeNames[i] + "</span>: " + attributes[attributeNames[i]];
+            html += "</td>";
+
+            for (var j = 0; j < ITERATIONS; j++) {
+                html += "<td style=\"text-align:center;\">" + calculatedAttributes[attributeNames[i]][j] + "</td>";
+            }
+            html += "</tr>";
+
+            $('#tdp-table > tbody:last').append(html);
+        }
+
+        $(".tooltip").tipTip({maxWidth: "150px", edgeOffset: 2, keepAlive: false, defaultPosition: "right"});
+    }
+
+    function drawTotalStats(totals) {
+        var html = "";
+        html += "<td style=\"font-weight:bold;width:12em;\">Total stats:</td>";
+        html += "<td style=\"padding-left:10px;\">" + totals[TOTAL_ATTR] + "</td>";
+        $('#tdp-total-stats').append(html);
+    }
+
+    function drawAvgStats(totals) {
+        var html = "";
+        html += "<td style=\"font-weight:bold;\">Average stat:</td>";
+        html += "<td style=\"padding-left:10px;\">" + totals[AVG_ATTR] + "</td>";
+        $('#tdp-avg-stats').append(html);
+    }
+
+    function drawTotalSpent(totalSpent) {
+        var html = "";
+        html += "<td style=\"font-weight:bold;\">Total TDPs spent:</td>";
+        html += "<td style=\"padding-left:10px;\">" + totalSpent + "</td>";
+        $('#tdp-total-spent').append(html);
+    }
+
+    function drawBurden(burden) {
+        var html = "";
+        html += "<td style=\"font-weight:bold;\">Burden threshold:</td>";
+        html += "<td style=\"padding-left:10px;\">" + burden + "</td>";
+        $('#tdp-burden').append(html);
+    }
+
+    function hideTDPs() {
+        $('#tdp-calc').hide();
+    }
+
+    function showTDPs() {
+        $('#tdp-calc').show();
+    }
+
+    function showForm() {
+        $('#tdp-form').show();
+    }
+
+    function hideForm() {
+        $('#tdp-form').hide();
+    }
+
+    function reset() {
+        hideTDPs();
+        showForm();
+    }
+
+    $(function() {
+        reset();
+    });
+
+</script>
+
+<br/>
+
+<h2 style="display: inline">Dragonrealms TDP Calculator</h2>
+
+<br/><br/><br/>
+
+<div id="tdp-calc">
+
+    <table id="tdp-table">
+        <thead>
+        <tr style="font-variant: normal; font-size: large;">
+            <th style="text-align:left;">Stats #</th>
+            <th>&nbsp;TDPs for 1&nbsp;</th>
+            <th>&nbsp;TDPs for 2&nbsp;</th>
+            <th>&nbsp;TDPs for 3&nbsp;</th>
+            <th>&nbsp;TDPs for 4&nbsp;</th>
+            <th>&nbsp;TDPs for 5&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br/>
+
+    <table class="stat-summary">
+        <tr id="tdp-total-stats"></tr>
+        <tr id="tdp-avg-stats"></tr>
+        <tr id="tdp-total-spent"></tr>
+        <tr id="tdp-burden"></tr>
+        <tr>
+            <td style="font-weight:bold;">TDPs from circle:</td>
+            <td style="padding-left:10px;">
+                <span id="tdpsFromCircle"></span>
+                <script type="text/JavaScript">drawTable(1, 5);</script>
+            </td>
+        </tr>
+        <tr>
+            <td class="center">
+                <input style="font-size:0.8em;" onkeyup="drawTable(this.value, circle2.value);"
+                                      onchange="drawTable(this.value, circle2.value);"
+                                      onmouseleave="drawTable(this.value, circle2.value);"
+                                      title="Circle to display from" size="1" maxlength="3" value="1" id="circle1">
+                - <input style="font-size:0.8em;" onkeyup="drawTable(circle1.value, this.value);"
+                         onchange="drawTable(circle1.value, this.value);"
+                         onmouseleave="drawTable(circle1.value, this.value);" title="Circle to display to" size="1"
+                         maxlength="3" value="5" id="circle2">
+            </td>
+        </tr>
+    </table>
+
+    <a href="#" onclick="reset()">reset</a>
+</div>
+
+
+<form id="tdp-form" action="javascript:tdpcalc();">
+    <table>
+        <tr>
+            <td colspan="2">
+                <label for="tdp-text-area">Paste your stats:</label><br>
+                <textarea cols="" rows="" name="info" id="tdp-text-area" class="tdp-text-area"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"></td>
+            <td style="text-align: right;">
+                <select id="tdp-race" name="race">
+                    <option value="human">Human</option>
+                    <option value="dwarf">Dwarf</option>
+                    <option value="elf">Elf</option>
+                    <option value="elothean">Elothean</option>
+                    <option value="gnome">Gnome</option>
+                    <option value="tog">Gor'Tog</option>
+                    <option value="halfling">Halfling</option>
+                    <option value="kaldar">Kaldar</option>
+                    <option value="prydaen">Prydaen</option>
+                    <option value="rakash">Rakash</option>
+                    <option value="skra">Skra'mur</option>
+                </select>
+            <td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>
