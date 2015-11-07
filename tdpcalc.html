@@ -32,10 +32,15 @@
     var TOTAL_ATTR = 'totalAttributes';
     var AVG_ATTR = 'avgAttributes';
 
+    var attributes = {};
+
     function tdpcalc() {
         clearFields();
 
-        var attributes = getValues();
+        if(Object.keys(attributes).length == 0) {
+            attributes = getValues();
+        }
+
         var mod = getRacialModifier();
 
         var calculatedAttributes = calculateValues(attributes, mod, ITERATIONS);
@@ -51,21 +56,39 @@
         var burden = calculateBurden(attributes);
         drawBurden(burden);
 
+        var concentration = calculateConcentration(attributes);
+        drawConcentration(concentration);
+
         showTDPs();
         hideForm();
     }
 
     function clearFields() {
-        $('#tdp-table tbody').empty();
+        $('#tdp-body').empty();
         $('#tdp-total-stats').empty();
         $('#tdp-avg-stats').empty();
         $('#tdp-total-spent').empty();
         $('#tdp-burden').empty();
+        $('#tdp-conc').empty();
+    }
+
+    function add(stat) {
+        attributes[stat] = attributes[stat] + 1;
+        tdpcalc();
+    }
+
+    function sub(stat) {
+        attributes[stat] = attributes[stat] - 1;
+        tdpcalc();
     }
 
     function calculateBurden(attributes) {
         var racialModifier = racialBurdenFactors[getSelectedRace()];
         return (attributes['strength'] + attributes["stamina"]) * racialModifier;
+    }
+
+    function calculateConcentration(attributes) {
+        return 3 * attributes['discipline']  + 1.5 * attributes["intelligence"] + attributes['stamina'];
     }
 
     function calculateTotals(attributes){
@@ -143,18 +166,25 @@
     function drawTDPs(attributes, calculatedAttributes, mod) {
         for(var i = 0; i < attributeNames.length; i++) {
             var html = "";
-            html += "<tr>";
+            html += "<tr style='vertical-align: middle;'>";
 
-            html += "<td style=\"text-transform: capitalize; font-variant: normal; font-size: large; font-weight: bold; padding-right: 80px;\">";
-            html += "<span class=\"tooltip\" title=\"Racial TDP cost: " + mod[i] + " \">" + attributeNames[i] + "</span>: " + attributes[attributeNames[i]];
+            html += "<td style=\"text-transform: capitalize; font-variant: normal; font-weight: bolder;\">";
+            html += "<span class=\"tooltip\" title=\"Racial TDP cost: " + mod[i] + " \">" + attributeNames[i] + "</span>: <div style='float:right; padding-left:10px;'>" + attributes[attributeNames[i]] + "</div>";
+            html += "</td>";
+
+            html += "<td>";
+            html += "<div class='modify-controls'>";
+            html += "<div class='add'><a href=\"javascript:add('"+ attributeNames[i] +"');\">+</a></div>" +
+                    "<div class='sub'><a href=\"javascript:sub('"+ attributeNames[i] +"');\">-</a></div>";
+            html += "</div>";
             html += "</td>";
 
             for (var j = 0; j < ITERATIONS; j++) {
-                html += "<td style=\"text-align:center;\">" + calculatedAttributes[attributeNames[i]][j] + "</td>";
+                html += "<td class='tdp-number'>" + calculatedAttributes[attributeNames[i]][j] + "</td>";
             }
             html += "</tr>";
 
-            $('#tdp-table > tbody:last').append(html);
+            $('#tdp-body:last').append(html);
         }
 
         $(".tooltip").tipTip({maxWidth: "150px", edgeOffset: 2, keepAlive: false, defaultPosition: "right"});
@@ -162,7 +192,7 @@
 
     function drawTotalStats(totals) {
         var html = "";
-        html += "<td style=\"font-weight:bold;width:12em;\">Total stats:</td>";
+        html += "<td style=\"font-weight:bold;width:10em;\">Total stats:</td>";
         html += "<td style=\"padding-left:10px;\">" + totals[TOTAL_ATTR] + "</td>";
         $('#tdp-total-stats').append(html);
     }
@@ -188,6 +218,13 @@
         $('#tdp-burden').append(html);
     }
 
+    function drawConcentration(concentration) {
+        var html = "";
+        html += "<td style=\"font-weight:bold;\">Concentration pool:</td>";
+        html += "<td style=\"padding-left:10px;\">" + concentration + "</td>";
+        $('#tdp-conc').append(html);
+    }
+
     function hideTDPs() {
         $('#tdp-calc').hide();
     }
@@ -205,6 +242,7 @@
     }
 
     function reset() {
+        attributes = {};
         hideTDPs();
         showForm();
     }
@@ -225,8 +263,9 @@
 
     <table id="tdp-table">
         <thead>
-        <tr style="font-variant: normal; font-size: large;">
+        <tr>
             <th style="text-align:left;">Stats #</th>
+            <th></th>
             <th>&nbsp;TDPs for 1&nbsp;</th>
             <th>&nbsp;TDPs for 2&nbsp;</th>
             <th>&nbsp;TDPs for 3&nbsp;</th>
@@ -234,7 +273,7 @@
             <th>&nbsp;TDPs for 5&nbsp;</th>
         </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="tdp-body"></tbody>
     </table>
     <br/>
 
@@ -243,6 +282,7 @@
         <tr id="tdp-avg-stats"></tr>
         <tr id="tdp-total-spent"></tr>
         <tr id="tdp-burden"></tr>
+        <tr id="tdp-conc"></tr>
         <tr>
             <td style="font-weight:bold;">TDPs from circle:</td>
             <td style="padding-left:10px;">
