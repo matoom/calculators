@@ -114,9 +114,7 @@ function calcExp(information) {
  var weaponSkillNames = new Array("Parry Ability", "Small Edged", "Heavy Edged", "Twohanded Edged", "Small Blunt",
                                   "Large Blunt", "Twohanded Blunt", "Large Edged", "Sling", "Bow", "Crossbow", "Staves",
                                      "Polearms", "Light Thrown", "Heavy Thrown", "Brawling", "Expertise", "Melee Mastery",
-                                  "Missile Mastery");
-	
- var masterySkillNames = new Array("Melee Mastery", "Missile Mastery");
+                                  "Missile Mastery", "Offhand Weapon");
 
  var magicSkillNames = new Array("Attunement", "Arcana", "Targeted Magic", "Astrology",
                                  "Utility", "Sorcery", "Elementalism", "Augmentation", "Debilitation", "Warding",

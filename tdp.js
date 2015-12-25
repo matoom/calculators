@@ -10,10 +10,10 @@ function drawTable(circleFirst, circleSecond) {
         circleFirst = 1;
 	}
 
-   	if ((circleSecond - circleFirst) > 50) {
+   	/*if ((circleSecond - circleFirst) > 50) {
         document.getElementById('tdpsFromCircle').innerHTML = "Can't display more than 50 circles at a time.";
    		return;
-   	}
+   	}*/
 
    	if (circleSecond > 150) {
    		document.getElementById('tdpsFromCircle').innerHTML = "Can't display more than 150 circles.";
