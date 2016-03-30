@@ -25,8 +25,6 @@
         'elothean': [1, -1, 0, 0, 0, -1, -1, 2], 'gnome': [3, -2, -1, 0, 0, 0, -2, 2], 'tog': [-3, 1, 0, 0, 0, 2, 2, -2],
         'halfling': [2, -1, -2, 0, 1, 1, 0, -1], 'kaldar': [-1, 0, 0, -1, 0, 1, 1, 0], 'prydaen': [0, -2, 0, -1, 1, 2, 0, 0],
         'rakash': [0, -1, 1, 0, -1, 1, 2, -2], 'skra': [-1, -1, 0, 0, 0, 1, 1, 0] };
-    var racialBurdenFactors = { 'tog' : 30, 'kaldar' : 28, 'skra' : 27, 'rakash' : 24, 'human' : 24, 'dwarf' : 23,
-        'prydaen' : 23, 'elothean' : 22, 'elf' : 22,'halfling': 20, 'gnome' : 18 };
 
     var ITERATIONS = 5;
     var TOTAL_ATTR = 'totalAttributes';
@@ -83,8 +81,7 @@
     }
 
     function calculateBurden(attributes) {
-        var racialModifier = racialBurdenFactors[getSelectedRace()];
-        return (attributes['strength'] + attributes["stamina"]) * racialModifier;
+        return 10 * Math.ceil((0.4 * 6 * (attributes['strength'] + attributes["stamina"])).toFixed(1));
     }
 
     function calculateConcentration(attributes) {
