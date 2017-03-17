@@ -85,7 +85,7 @@
     }
 
     function calculateConcentration(attributes) {
-        return 3 * attributes['discipline']  + 1.5 * attributes["intelligence"] + attributes['stamina'];
+        return Math.ceil(300 + ((attributes['discipline'] * 1.5) + (attributes["intelligence"] * 0.75) + (attributes['stamina'] * 0.5)))
     }
 
     function calculateTotals(attributes){
